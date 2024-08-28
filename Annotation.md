@@ -51,7 +51,7 @@ public class BookService {
 
 ### 5. `@Repository`
 **Rôle :** Indique que la classe est un composant DAO (Data Access Object) qui interagit avec la base de données. Elle est utilisée pour encapsuler la logique d'accès aux données.
-
+Non obligatoire du moment on extends deja la classe du JpaRepository
 **Exemple :**
 ```java
 @Repository
