@@ -273,7 +273,244 @@ public class JpaConfig {
     // ...
 }
 ```
+Voici une liste complète des annotations importantes dans Spring Boot, en ajoutant celles qui ne figurent pas encore dans votre liste et en expliquant leur rôle et leur utilisation :
 
+### 23. `@SpringBootApplication`
+**Rôle :** C'est une annotation composite qui englobe `@Configuration`, `@EnableAutoConfiguration`, et `@ComponentScan`. Elle est utilisée pour démarrer une application Spring Boot.
+
+**Exemple :**
+```java
+@SpringBootApplication
+public class MyApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MyApplication.class, args);
+    }
+}
+```
+
+### 24. `@Value`
+**Rôle :** Injecte des valeurs dans les champs d'un bean depuis le fichier de configuration (`application.properties` ou `application.yml`).
+
+**Exemple :**
+```java
+@Component
+public class MyComponent {
+
+    @Value("${my.property}")
+    private String myProperty;
+
+    // Utiliser myProperty ici
+}
+```
+
+### 25. `@Profile`
+**Rôle :** Spécifie que la configuration ou le bean ne doit être actif que dans un certain profil (par exemple, développement, production).
+
+**Exemple :**
+```java
+@Configuration
+@Profile("dev")
+public class DevConfig {
+    // Beans pour le profil de développement
+}
+```
+
+### 26. `@ConditionalOnProperty`
+**Rôle :** Conditionne l'enregistrement d'un bean à la présence d'une propriété spécifique dans la configuration.
+
+**Exemple :**
+```java
+@Configuration
+@ConditionalOnProperty(name = "feature.enabled", havingValue = "true")
+public class FeatureConfig {
+    // Configuration conditionnelle basée sur une propriété
+}
+```
+
+### 27. `@ConditionalOnClass`
+**Rôle :** Conditionne l'enregistrement d'un bean à la présence d'une classe spécifique sur le classpath.
+
+**Exemple :**
+```java
+@Configuration
+@ConditionalOnClass(SomeClass.class)
+public class SomeClassConfig {
+    // Configuration conditionnelle basée sur la présence d'une classe
+}
+```
+
+### 28. `@ConditionalOnMissingBean`
+**Rôle :** Conditionne l'enregistrement d'un bean si un autre bean de même type n'existe pas déjà.
+
+**Exemple :**
+```java
+@Configuration
+public class MyConfig {
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MyService myService() {
+        return new MyServiceImpl();
+    }
+}
+```
+
+### 29. `@Cacheable`
+**Rôle :** Indique que le résultat d'une méthode doit être mis en cache.
+
+**Exemple :**
+```java
+@Cacheable("books")
+public Book getBook(Long id) {
+    // Logique pour récupérer un livre
+}
+```
+
+### 30. `@CacheEvict`
+**Rôle :** Indique que le cache doit être invalidé pour une méthode spécifique.
+
+**Exemple :**
+```java
+@CacheEvict("books")
+public void updateBook(Book book) {
+    // Logique pour mettre à jour un livre
+}
+```
+
+### 31. `@CachePut`
+**Rôle :** Met à jour le cache avec le résultat de la méthode.
+
+**Exemple :**
+```java
+@CachePut("books")
+public Book updateBook(Long id, Book book) {
+    // Logique pour mettre à jour un livre et mettre à jour le cache
+}
+```
+
+### 32. `@Async`
+**Rôle :** Indique qu'une méthode doit être exécutée de manière asynchrone dans un thread séparé.
+
+**Exemple :**
+```java
+@Async
+public CompletableFuture<String> asyncMethod() {
+    // Traitement asynchrone
+}
+```
+
+### 33. `@EventListener`
+**Rôle :** Permet d'écouter des événements Spring ApplicationContext.
+
+**Exemple :**
+```java
+@Component
+public class MyEventListener {
+
+    @EventListener
+    public void handleCustomEvent(CustomEvent event) {
+        // Traitement de l'événement
+    }
+}
+```
+
+### 34. `@Scheduled`
+**Rôle :** Permet de planifier des tâches à exécuter périodiquement.
+
+**Exemple :**
+```java
+@Component
+public class ScheduledTasks {
+
+    @Scheduled(fixedRate = 5000)
+    public void performTask() {
+        // Tâche à exécuter toutes les 5 secondes
+    }
+}
+```
+
+### 35. `@Import`
+**Rôle :** Permet d'importer des configurations supplémentaires dans la configuration principale.
+
+**Exemple :**
+```java
+@Configuration
+@Import(AdditionalConfig.class)
+public class MainConfig {
+    // Configuration principale
+}
+```
+
+### 36. `@PropertySource`
+**Rôle :** Spécifie des fichiers de propriétés supplémentaires à charger dans le contexte Spring.
+
+**Exemple :**
+```java
+@Configuration
+@PropertySource("classpath:additional.properties")
+public class AppConfig {
+    // Configuration
+}
+```
+
+### 37. `@Transactional(readOnly = true)`
+**Rôle :** Indique que la méthode ou la classe est en lecture seule, ce qui peut optimiser les performances pour les opérations de lecture.
+
+**Exemple :**
+```java
+@Service
+@Transactional(readOnly = true)
+public class BookService {
+
+    public List<Book> getAllBooks() {
+        // Lecture uniquement
+    }
+}
+```
+
+### 38. `@Data`
+**Rôle :** Fournit des annotations Lombok pour générer automatiquement getters, setters, `equals()`, `hashCode()`, et `toString()`. 
+
+**Exemple :**
+```java
+@Data
+public class Book {
+    private Long id;
+    private String title;
+    private String author;
+}
+```
+
+### 39. `@Setter`, `@Getter`, `@ToString`, `@EqualsAndHashCode`
+**Rôle :** Fournit des annotations Lombok pour générer des getters, setters, méthodes `toString()`, et méthodes `equals()`/`hashCode()` individuellement.
+
+**Exemple :**
+```java
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+public class Book {
+    private Long id;
+    private String title;
+    private String author;
+}
+```
+
+### 40. `@FieldDefaults`
+**Rôle :** Définit les niveaux d'accès par défaut pour les champs dans une classe.
+
+**Exemple :**
+```java
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Book {
+    Long id;
+    String title;
+    String author;
+}
+```
+
+Ces annotations couvrent une large gamme de fonctionnalités offertes par Spring et Spring Boot pour développer des applications robustes et bien structurées. Utiliser ces annotations de manière appropriée vous aidera à tirer parti des capacités du framework et à maintenir un code propre et maintenable.
 ---
 
 Ces annotations couvrent la majorité des fonctionnalités nécessaires pour développer une application Spring Boot. Celles listées au début sont les plus couramment utilisées et essentielles, tandis que celles vers la fin sont plus spécifiques à certains cas d'utilisation.
