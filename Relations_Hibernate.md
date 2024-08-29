@@ -1,3 +1,4 @@
+## spring.jpa.hibernate.ddl-auto
 La propriété `spring.jpa.hibernate.ddl-auto` est une configuration clé dans les applications Spring Boot utilisant JPA (Java Persistence API) avec Hibernate comme implémentation ORM. Elle contrôle le comportement de la génération du schéma de la base de données par Hibernate au démarrage de l'application. Voici un aperçu des différentes options disponibles pour cette propriété :
 
 ### Valeurs Possibles
